@@ -1,12 +1,14 @@
 import {Router} from 'express'
-import {getUsers, createUser, getUser} from '../controllers/user.controller'
+import {getUsers, getUser, getUserLog} from '../controllers/user.controller'
+import {isLog} from "../controllers/authController";
 
 const router = Router()
+router.use(isLog)
 
 router.route('/')
     .get(getUsers)
-router.route('/register')
-    .post(createUser)
+router.route("/main")
+    .get(getUserLog)
 router.route('/:id')
     .get(getUser)
     

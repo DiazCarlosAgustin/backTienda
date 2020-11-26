@@ -18,16 +18,32 @@ export async function login(req:Request, res:Response){
         }})
     
     if(!usuario){
-        res.status(400).json({"error": "El mail ingresado es incorrecto."})
+        res.json({"error": "El mail ingresado es incorrecto."})
     }
 
     if(!usuario.comparePassword(password)){
-        res.status(400).json({"error": "La contraseña ingresada es incorrecta."})
+        res.json({"error": "La contraseña ingresada es incorrecta."})
     }
 
     const token = jwt.sign({
         id: usuario.id, nombre: usuario.nombre, email: usuario.email
     }, jwtConfig.Secret)
 
-    res.json({"token": token, "status": "OK", "msg":"Se ingreso correctamente.git"})
+    res.json({"token": token, "status": "OK", "msg":"Se ingreso correctamente.", "user": usuario})
+}
+export async  function isLog(req:Request|any, res:Response, next:NextFunction){
+    if(!req.headers['usertoken']){
+        res.json({"error": "token no valido."})
+    }
+    else{
+        const token:any = req.headers['usertoken']
+        let payload = null
+        try{
+            payload = jwt.decode(token)
+        }catch(err){
+            res.json({"error" : "Token invalido."})
+        }
+        req.userId = payload
+    }
+    next()
 }

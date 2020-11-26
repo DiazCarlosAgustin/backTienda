@@ -24,8 +24,19 @@ export async function createUser(req:Request, res:Response){
 }
 
 export async function getUser(req:Request, res:Response){
-    let id = req.params.id
+    let id = await req.params.id
     const result = await getRepository(user).find({where: {id: id}})
 
     res.json({"result" : result})
+}
+
+export async function getUserLog(req:Request|any, res:Response){
+    let id = await req.userId.id 
+    if (id > 0){
+        const result = await getRepository(user).find({where: {id:id}})
+        res.json({"user": result[0]})
+    }
+    else{
+        res.json("asd")
+    }
 }
