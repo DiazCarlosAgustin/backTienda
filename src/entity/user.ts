@@ -1,36 +1,41 @@
-import {Entity, Column, PrimaryGeneratedColumn,Unique, CreateDateColumn, UpdateDateColumn} from  'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, Unique, CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import * as bcrypt from 'bcrypt'
 
 @Entity("user")
 @Unique(["email"])
-export class user{
-    @PrimaryGeneratedColumn()
-    id: number;
+export class user {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    nombre: string;
+  @Column()
+  nombre: string;
 
-    @Column()
-    apellido: string;
-    
-    @Column()
-    email: string;
-    
-    @Column()
-    telefono: string;
+  @Column()
+  apellido: string;
 
-    @Column()
-    password: string;
+  @Column()
+  email: string;
 
-    @Column()
-    @CreateDateColumn()
-    createdAt: Date;
+  @Column()
+  telefono: string;
 
-    @Column()
-    @UpdateDateColumn()
-    updatedAt: Date;
+  @Column()
+  password: string;
 
-    comparePassword(unencryptedPassword: string) {
-        return bcrypt.compareSync(unencryptedPassword, this.password);
-      }
+  @Column()
+  role: boolean;
+
+  @Column()
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @Column()
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+
+
+  comparePassword(unencryptedPassword: string) {
+    return bcrypt.compareSync(unencryptedPassword, this.password);
+  }
 }
