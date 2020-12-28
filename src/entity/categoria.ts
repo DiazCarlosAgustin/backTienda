@@ -1,4 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, Unique, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+
+// * Tabla/entidad de Categoria
+// TODO: crear una relacion entre producto y categorias como clave foranea (1 - 1)
 
 @Entity()
 export class categoria {

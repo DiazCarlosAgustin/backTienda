@@ -1,6 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, Unique, CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import * as bcrypt from 'bcrypt'
 
+// * Tabla/entidad de Usuario
+
 @Entity("user")
 @Unique(["email"])
 export class user {
@@ -34,7 +36,9 @@ export class user {
   updatedAt: Date;
 
 
-
+  /**
+   * @param unencryptedPassword <Contaseña Plana>
+   */
   comparePassword(unencryptedPassword: string) {
     return bcrypt.compareSync(unencryptedPassword, this.password);
   }
