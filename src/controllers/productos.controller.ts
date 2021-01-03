@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Producto } from "../entity/productos";
 import { getRepository } from "typeorm";
-import * as bcrypt from "bcrypt";
+
 
 /**
  * *Retorno todos los productos

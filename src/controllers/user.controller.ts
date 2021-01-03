@@ -11,6 +11,7 @@ import * as bcrypt from "bcrypt";
  */
 export async function getUsers(req: Request, res: Response): Promise<void> {
     try {
+        // *Intento traer todas los users
         await getRepository(user)
             .find()
             .then((result) => {
@@ -99,13 +100,12 @@ export async function getUser(req: Request, res: Response): Promise<void> {
 
 // *Retorno el usuario logueado
 export async function getUserLog(req: Request | any, res: Response): Promise<void> {
-    try {
-        let id = (await req.userId.id) || null; // ? Tomo el id del usuario logueado
-
-        if (id > 0) {
+    // ? Tomo el id del usuario logueado
+    if (req.userId?.id != null) {
+        try {
             // *Obtengo la data del usuario logueado
             await getRepository(user)
-                .find({ where: { id: id } })
+                .find({ where: { id: req.userId.id } })
                 .then((result) => {
                     res.json({ user: result[0] });
                 })
@@ -113,12 +113,17 @@ export async function getUserLog(req: Request | any, res: Response): Promise<voi
                     console.log(err);
                 });
         }
+        catch (err) {
+            // !en caso que falle retorna el error
+            console.error(err)
+            res.status(404).json({
+                error: err
+            })
+        }
     }
-    catch (err) {
-        // !en caso que falle retorna el error
-        console.error(err)
-        res.status(404).json({
-            error: err
+    else {
+        res.json({
+            user: null
         })
     }
 }
