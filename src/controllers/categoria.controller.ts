@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { categoria } from "../entity/categoria";
 import { getRepository } from "typeorm";
 
+
 /**
  * TODO: crear funciones para el manejo de la misma.
  */
@@ -36,10 +37,15 @@ export async function getCategorias(req: Request, res: Response): Promise<void> 
  * @param res 
  */
 export async function crearCategoria(req: Request, res: Response): Promise<void> {
-    try {
-        const newCategoria = req.body;
 
-        // * guarda los datos para crear una nueva categoria
+
+    try {
+        const newCategoria = {
+            nombre: req.body.nombre,
+            imagen: req.file.filename,
+            descripcion: req.body.descripcion
+        };
+        //* guarda los datos para crear una nueva categoria
 
         await getRepository(categoria)
             .save(newCategoria)

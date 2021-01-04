@@ -2,13 +2,15 @@ import express from 'express';
 import { createConnection } from 'typeorm'
 import cors = require('cors');
 import 'reflect-metadata'
-import multer from 'multer'
 import path from 'path'
+
+// import multer from 'multer'
 
 // routes
 import indexRouter from './routes/index.routes'
 import userRouter from './routes/user.routes'
 import authRouter from './routes/auth.routes'
+import categoriaRouter from './routes/categorias.routes'
 
 export class App {
     app: express.Application
@@ -26,22 +28,16 @@ export class App {
     }
 
     middleware() {
-        const storage = multer.diskStorage({
-            destination: path.join(__dirname, 'public/img'),
-        })
-
         this.app.use(cors())
         this.app.use(express.json())
-        this.app.use(multer({
-            storage,
-            dest: path.join(__dirname, 'public/img'),
-        }).single('image'))
+        this.app.use(express.static(path.join(__dirname, '/public')));
     }
 
     routes() {
         this.app.use(indexRouter)
         this.app.use('/user/', userRouter)
         this.app.use('/auth/', authRouter)
+        this.app.use('/categoria/', categoriaRouter)
     }
 
     async listen() {
