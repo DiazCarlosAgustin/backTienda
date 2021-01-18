@@ -2,7 +2,7 @@ import { Router } from 'express'
 import multer from 'multer'
 import path from 'path'
 import { v4 } from 'uuid'
-import { crearCategoria, getCategorias } from '../controllers/categoria.controller'
+import { crearCategoria, getCategorias, getCategoria, updateCategoria, deleteCategoria } from '../controllers/categoria.controller'
 
 const router = Router()
 /**
@@ -20,5 +20,10 @@ const upload = multer({
 router.route('/')
     .get(getCategorias)
     .post(upload.single("file"), crearCategoria)
+
+router.route('/:id')
+    .get(getCategoria)
+    .put(updateCategoria)
+    .delete(deleteCategoria)
 
 export default router
