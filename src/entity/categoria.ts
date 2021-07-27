@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 // * Tabla/entidad de Categoria
 // TODO: crear una relacion entre producto y categorias como clave foranea (1 - 1)
 
-@Entity()
+@Entity("categoria")
 export class categoria {
     @PrimaryGeneratedColumn()
     id: number;
